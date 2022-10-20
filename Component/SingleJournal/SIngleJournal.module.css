@@ -1,0 +1,12 @@
+.SingleJournal_Pagelayout {
+  width: 70%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.SingleJournal_Pagelayout img {
+  height: 1000px;
+  width: 100%;
+  object-fit: contain;
+}

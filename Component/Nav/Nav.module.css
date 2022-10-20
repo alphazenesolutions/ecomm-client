@@ -1,0 +1,59 @@
+/* .logo img {
+  width: 100px !important;
+  height: 100px !important;
+} */
+.NavBar {
+  position: relative;
+}
+
+.Girls_product {
+  position: absolute;
+  bottom: 0;
+  height: 500px;
+  width: 500px;
+  background-color: white;
+}
+
+.Nav_searchBar {
+  position: relative;
+}
+
+.Nav_searchBar input {
+  padding: 10px !important;
+  text-align: center;
+  transition: all 1s !important;
+}
+
+.SearchedProducts {
+  position: absolute;
+  top: 80px;
+  left: 0;
+  z-index: 10;
+  height: auto;
+  overflow-y: scroll;
+  background-color: rgb(255, 255, 255);
+
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.SearchedProducts::-webkit-scrollbar {
+  display: none;
+}
+
+.SearchedProducts img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+
+.productbox:hover {
+  background-color: #dadadb5e;
+  cursor: pointer;
+}
+.Nav_avatar {
+  width: 30px !important;
+  height: 30px !important;
+}
+.navMenus:hover {
+  cursor: pointer;
+}

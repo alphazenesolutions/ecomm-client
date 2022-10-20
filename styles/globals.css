@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.MuiBadge-badge,
+.MuiBadge-standard,
+.MuiBadge-anchorOriginTopRight,
+.MuiBadge-anchorOriginTopRightRectangular,
+.MuiBadge-overlapRectangular,
+.MuiBadge-colorPrimary,
+.BaseBadge-badge,
+.css-106c1u2-MuiBadge-badge {
+  background-color: #fed65a !important;
+  color: black !important;
+}

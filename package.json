@@ -1,0 +1,39 @@
+{
+  "name": "ecom_client",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@mui/icons-material": "^5.10.6",
+    "@mui/lab": "^5.0.0-alpha.102",
+    "@mui/material": "^5.10.6",
+    "@mui/styled-engine-sc": "^5.10.6",
+    "@reduxjs/toolkit": "^1.8.5",
+    "autoprefixer": "^10.4.12",
+    "axios": "^0.27.2",
+    "dotenv": "^16.0.2",
+    "firebase": "^8.3.1",
+    "formik": "^2.2.9",
+    "moment": "^2.29.4",
+    "next": "12.3.1",
+    "postcss": "^8.4.16",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-read-more-less": "^0.1.6",
+    "react-redux": "^8.0.4",
+    "react-toastify": "^9.0.8",
+    "styled-components": "^5.3.5",
+    "swiper": "^8.4.2",
+    "tailwindcss": "^3.1.8"
+  },
+  "devDependencies": {
+    "eslint": "8.24.0",
+    "eslint-config-next": "12.3.1"
+  }
+}

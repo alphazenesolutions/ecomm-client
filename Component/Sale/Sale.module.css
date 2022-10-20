@@ -1,0 +1,19 @@
+.ShopNow_Page_layout {
+  display: grid;
+  grid-template-columns: 0.6fr 3fr;
+  grid-gap: 2rem;
+}
+.Single_product img {
+  height: 300px !important;
+  width: 100% !important;
+  object-fit: cover;
+}
+.product_colors p {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+}
+.product_size p:hover,
+.product_colors p:hover {
+  cursor: pointer;
+}

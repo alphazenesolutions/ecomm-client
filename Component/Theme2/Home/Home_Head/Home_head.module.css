@@ -1,0 +1,11 @@
+.Home_swiper img {
+  width: 100% !important;
+  margin: auto;
+
+  height: 500px !important;
+  object-fit: cover;
+}
+.Home_swiper {
+  margin-top: 16px;
+  padding: 2rem;
+}

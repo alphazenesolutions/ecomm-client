@@ -1,0 +1,5 @@
+.Featured_product_images img {
+  height: 500px !important;
+  width: 100%;
+  object-fit: cover;
+}

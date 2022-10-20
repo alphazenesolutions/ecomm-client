@@ -1,0 +1,33 @@
+.SingleProduct_pageLayout {
+  display: grid;
+  grid-template-columns: 0.3fr 1.5fr 1fr;
+  grid-gap: 2rem;
+  padding: 2rem;
+}
+.SingleProduct_images img {
+  height: 130px;
+  width: 100%;
+  object-fit: contain;
+}
+.SingleProduct_image {
+  width: 100%;
+  height: 700px;
+  object-fit: contain;
+}
+.SingleProduct_color {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+}
+.SingleProduct_size p:hover {
+  cursor: pointer;
+  background-color: #dadadb;
+}
+.SingleProduct_Quantity p:hover {
+  cursor: pointer;
+}
+.SingleProduct_Youmaylike img {
+  height: 300px;
+  width: 100%;
+  object-fit: contain;
+}

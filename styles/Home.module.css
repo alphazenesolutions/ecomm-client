@@ -1,0 +1,12 @@
+.Chatwithus {
+  background-color: #333 !important;
+  position: fixed !important;
+  right: 20px !important;
+  bottom: 20px !important;
+  width: 60px !important;
+  height: 60px !important;
+}
+.Chatwithus_icon {
+  font-size: 30px !important;
+  z-index: 100 !important;
+}
