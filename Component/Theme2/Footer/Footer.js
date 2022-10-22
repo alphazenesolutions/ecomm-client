@@ -39,7 +39,7 @@ const Footer = () => {
   };
 
   return (
-    <div className="p-10 bg-black-1000 text-white-1000">
+    <div className="p-10 bg-black-1000 text-white-1000 cursor-pointer">
       <div className="grid grid-cols-5 gap-4 items-start">
         <div>
           <h1 className="mb-6">

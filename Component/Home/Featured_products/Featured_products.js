@@ -74,7 +74,7 @@ const Featured_products = () => {
         >
           {productdata.length !== 0
             ? productdata.map((data, index) => (
-                <SwiperSlide key={index} id={data.slug} onClick={viewproduct}>
+                <SwiperSlide key={index} id={data.slug} className="swipertag" onClick={viewproduct}>
                   <div className="flex flex-col items-center" id={data.slug}>
                     <img src={data.original} id={data.slug} />
                     <p className="text-center my-4" id={data.slug}>

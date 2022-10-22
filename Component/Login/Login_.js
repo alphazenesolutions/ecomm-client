@@ -192,7 +192,7 @@ const Login_ = () => {
                     <Loader />
                   </button>
                 )}
-                <p onClick={SinginHandler}>
+                <p onClick={SinginHandler} className="cursor-pointer">
                   Already have an account ? Sign in.
                 </p>
               </div>
@@ -231,12 +231,12 @@ const Login_ = () => {
                   </button>
                 )}
                 {isClicked && (
-                  <button className="bg-yellow-300 text-white-1000 w-full py-1 my-8">
+                  <button className="bg-yellow-300 text-white-1000 w-full py-1 my-8 cursor-pointer">
                     <Loader />
                   </button>
                 )}
 
-                <p onClick={SingupHandler}>New to here ? Create account.</p>
+                <p className="cursor-pointer" onClick={SingupHandler}>New to here ? Create account.</p>
               </div>
             </form>
           </div>

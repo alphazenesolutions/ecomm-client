@@ -178,7 +178,7 @@ const Nav_ = () => {
         <b> Free Shipping</b> : Across India on orders above 5000 INR
       </div>
       <div className="px-8 pt-4 text-sm">
-        <div className="flex items-center justify-between	 ">
+        <div className="flex items-center justify-between	cursor-pointer ">
           <h1></h1>
           <div>
             <InstagramIcon className="mr-2" />
@@ -257,9 +257,9 @@ const Nav_ = () => {
             className={`flex items-start justify-between mt-8 ${classes.nav_search}`}
           >
             {!isSearch && (
-              <SearchIcon className=" font-thin" onClick={searchHandler} />
+              <SearchIcon className="font-thin cursor-pointer" onClick={searchHandler} />
             )}
-            <div className="flex items-center flex-col logo	">
+            <div className="flex items-center flex-col logo	cursor-pointer">
               {storelogo === null ? (
                 <Image
                   onClick={Navigate_Home}
@@ -389,7 +389,7 @@ const Nav_ = () => {
                 />
               </div>
             ) : (
-              <div className="flex items-center">
+              <div className="flex items-center cursor-pointer">
                 <Person2OutlinedIcon onClick={userprofile} className="mr-4" />
               </div>
             )}

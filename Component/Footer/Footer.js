@@ -39,7 +39,7 @@ const Footer = () => {
   };
 
   return (
-    <div className="p-10 bg-yellow-300 ">
+    <div className="p-10 bg-yellow-300 cursor-pointer">
       <div className="grid grid-cols-5 gap-4 items-start">
         <div>
           <h1 className="mb-6">{storename !==null ?storename.toUpperCase():storename}</h1>
