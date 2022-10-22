@@ -80,6 +80,7 @@ const Nav_ = () => {
   const getallmenu = async () => {
     const store = sessionStorage.getItem("store_id");
     var mynavlist = await SingleNav({ id: store });
+    console.log(mynavlist);
     if (mynavlist.data.length !== 0) {
       setmenudata(mynavlist.data);
     }
@@ -134,12 +135,17 @@ const Nav_ = () => {
     window.location.replace(`/collections/singleProduct/${e.target.id}`);
   };
   const handleClick_M = async (event) => {
+    console.log(event.target.id);
+
     setAnchorEl_M(event.currentTarget);
     const store = sessionStorage.getItem("store_id");
     var checkmenudata = await menudata.filter((data) => {
-      return data.id === Number(event.target.id);
+      console.log(data);
+      return data.name == event.target.id;
     });
+    console.log(checkmenudata);
     if (checkmenudata.length !== 0) {
+      console.log("hleo");
       setselectedcategory([]);
       if (checkmenudata[0].categories !== null) {
         var categorylist = checkmenudata[0].categories.split(",");
@@ -154,6 +160,7 @@ const Nav_ = () => {
             }
           }
           setAnchorEl(event.currentTarget);
+          console.log(selectedcate);
           setselectedcategory(selectedcate);
         }
       }

@@ -59,3 +59,8 @@ export const Coverimg = axios.create({
 export const Navbar = axios.create({
   baseURL: `https://e-comme-api.herokuapp.com/navbar`,
 });
+export const Theme = axios.create({
+  baseURL: `https://e-comme-api.herokuapp.com/theme`,
+});
+
+// https://e-comme-api.herokuapp.com

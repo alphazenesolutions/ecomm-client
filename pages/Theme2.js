@@ -52,7 +52,7 @@ const Theme2 = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Home_head />
-      {userElementsArray.map((data, index) => {
+      {/* {userElementsArray.map((data, index) => {
         return (
           <span key={index}>
             {data == "Latest" && <Latest />}
@@ -61,7 +61,7 @@ const Theme2 = () => {
             {data == "Review" && <Review />}
           </span>
         );
-      })}
+      })} */}
       <Footer />
     </div>
   );

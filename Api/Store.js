@@ -11,7 +11,6 @@ export const CreateStore = async (data) => {
   return createstore;
 };
 
-
 export const Allstore = async () => {
   var Allstore = await Store.get(`/viewall`)
     .then((res) => {
@@ -25,6 +24,17 @@ export const Allstore = async () => {
 
 export const SingleStore = async (data) => {
   var SingleStore = await Store.post(`/viewbyuser`, data)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+  return SingleStore;
+};
+
+export const MyStore = async (data) => {
+  var SingleStore = await Store.post(`/view`, data)
     .then((res) => {
       return res.data;
     })

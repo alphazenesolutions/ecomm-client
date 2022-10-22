@@ -11,7 +11,6 @@ import { useSelector } from "react-redux";
 import { Allcategory } from "../../Api/Category";
 
 const ShopNow_ = () => {
-
   useEffect(() => {
     getCategory_product();
   }, []);
@@ -66,7 +65,7 @@ const ShopNow_ = () => {
         original: slug_category.data[i].original,
       });
     }
-
+    console.log(Products_data);
     setcategory_product(Products_data);
     if (Products_data.length !== 0) {
       var colorlist = [],

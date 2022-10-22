@@ -15,6 +15,7 @@ const Latest = () => {
     const storeid = sessionStorage.getItem("store_id");
 
     var allproductdata = await Allproduct();
+    
     if (allproductdata.data.length != 0) {
       var checkproduct = await allproductdata.data.filter((datanew) => {
         return datanew.store == storeid;
@@ -64,7 +65,6 @@ const Latest = () => {
           </div>
         )}
       </center>
-      
 
       <div className={`${classes.Latest_images} mt-8`}>
         <Swiper
