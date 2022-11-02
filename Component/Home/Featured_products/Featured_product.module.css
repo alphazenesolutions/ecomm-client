@@ -1,5 +1,18 @@
 .Featured_product_images img {
-  height: 500px !important;
-  width: 100%;
+  height: 400px !important;
+  width: 90%;
+  margin: auto;
   object-fit: cover;
+}
+.Featured_product_images {
+  height: 100%;
+  margin: auto;
+}
+.Featured_product_images::-webkit-scrollbar {
+  display: none;
+}
+.product_container {
+  width: 320px;
+  margin-bottom: 50px;
+  margin-top: 20px;
 }

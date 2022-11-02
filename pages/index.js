@@ -11,23 +11,30 @@ export default function Home() {
     getalldata();
   }, []);
   const getalldata = async () => {
-    const store = sessionStorage.getItem("store_id");
-
-    var Mystore = await Allstore();
-    var my_store = Mystore.data.filter((data) => {
-      return data.id == store;
+    var str = window.location.href;
+    var part = str.split("//").pop().split("/")[0];
+    var allstore = await Allstore();
+    var checkdomain = await allstore.data.filter((data) => {
+      return data.domain === part;
     });
-    var allTheme = await AllTheme();
-    var checkTheme = await allTheme.filter((data) => {
-      return data.name == my_store[0].theme;
-    });
-    console.log(checkTheme[0].name);
-    settheme(checkTheme[0].name);
+    if (checkdomain.length !== 0) {
+      const store = sessionStorage.getItem("store_id") || checkdomain[0].id;
+      var Mystore = await Allstore();
+      var my_store = Mystore.data.filter((data) => {
+        return data.id == store;
+      });
+      var allTheme = await AllTheme();
+      var checkTheme = await allTheme.filter((data) => {
+        return data.name == my_store[0].theme;
+      });
+      settheme(checkTheme[0].name);
+    }
   };
+
   return (
     <div>
-      {theme == "theme1" && <Theme1 />}
-      {theme == "theme2" && <Theme2 />}
+      {theme === "theme1" && <Theme1 />}
+      {theme === "theme2" && <Theme2 />}
     </div>
   );
 }

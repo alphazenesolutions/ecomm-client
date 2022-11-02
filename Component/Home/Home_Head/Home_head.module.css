@@ -9,3 +9,21 @@
   margin-top: 16px;
   padding: 2rem;
 }
+.LoadingPage {
+  height: 600px;
+  position: relative;
+  width: 100%;
+}
+.Loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.Loader p {
+  letter-spacing: 10px;
+  margin-left: 40px;
+}

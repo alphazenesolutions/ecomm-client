@@ -13,6 +13,7 @@ import Nav_ from "../../Nav/Nav_";
 import classes from "./Home_head.module.css";
 import { useSelector } from "react-redux";
 import { AllCoverimg } from "../../../Api/Coverimg";
+import Loaders from "../../Loader";
 // swiper
 
 const Home_head = () => {
@@ -32,30 +33,38 @@ const Home_head = () => {
   return (
     <div>
       <Nav_ />
-      <div className={classes.Home_swiper}>
-        <Swiper
-          spaceBetween={30}
-          pagination={{
-            clickable: true,
-          }}
-          autoplay={{
-            delay: 2500,
-            disableOnInteraction: false,
-          }}
-          navigation={true}
-          modules={[Autoplay, Pagination, Navigation]}
-          className="mySwiper"
-        >
-          {coveimglist.length !== 0
-            ? coveimglist.map((data, index) => (
-                <SwiperSlide>
-                  {" "}
-                  <img src={data.image} key={index} />
-                </SwiperSlide>
-              ))
-            : null}
-        </Swiper>
-      </div>
+      {coveimglist.length !== 0 && (
+        <div className={classes.Home_swiper}>
+          <Swiper
+            spaceBetween={30}
+            pagination={{
+              clickable: true,
+            }}
+            autoplay={{
+              delay: 2500,
+              disableOnInteraction: false,
+            }}
+            navigation={true}
+            modules={[Autoplay, Pagination, Navigation]}
+            className="mySwiper"
+          >
+            {coveimglist.map((data, index) => (
+              <SwiperSlide>
+                {" "}
+                <img src={data.image} key={index} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+      )}
+      {coveimglist.length == 0 && (
+        <div className={classes.LoadingPage}>
+          <div className={classes.Loader}>
+            <Loaders />
+            <p className="mt-4">Loading...</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

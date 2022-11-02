@@ -6,6 +6,7 @@ import { Payment } from "../../Api/Orders";
 import { Createorder } from "../../Api/Orders";
 import { toast, Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Emptydata from "../EmptyData/Emptydata";
 
 const Cart_ = () => {
   const [cartdata, setcartdata] = useState([]);
@@ -148,91 +149,98 @@ const Cart_ = () => {
   };
   return (
     <div className="p-8 ">
-      <h1 className="mb-4 text-2xl">CART</h1>
-      {cartdata.length == 0 && <center>NO PRODUCTS TO DISPLAY</center>}
+      {cartdata.length == 0 && (
+        <div>
+          <Emptydata data="Cart Items" />
+        </div>
+      )}
       {cartdata.length !== 0 && (
-        <div className="grid grid-cols-3 gap-8 ">
-          <div className="col-span-2  p-4 ">
-            {cartdata.map((data, index) => (
-              <>
-                <div
-                  className="flex items-center justify-between my-4"
-                  key={index}
-                >
-                  <img
-                    className={classes.cart_product_img}
-                    src={data.product.original}
-                  />
-                  <div>
-                    <h1 className="font-thin text-sm tracking-wider  mb-3">
-                      {data.product.name}
-                    </h1>
-                    <p>
-                      {data.variation.type} - {data.variation.value}
-                    </p>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <div className="flex">
-                      <p
-                        id={data.cart.id}
-                        onClick={deleterow}
-                        className="border hover:bg-white-400 py-2 px-2"
-                      >
-                        -
-                      </p>
-                      <p className="border py-2 px-8">{data.cart.Quantity}</p>
-                      <p
-                        id={data.cart.id}
-                        onClick={addcount}
-                        className="border hover:bg-white-400 py-2 px-2"
-                      >
-                        +
+        <>
+          <h1 className="mb-4 text-2xl">CART</h1>
+          <div className="grid grid-cols-3 gap-8 ">
+            <div className="col-span-2  p-4 ">
+              {cartdata.map((data, index) => (
+                <>
+                  <div
+                    className="flex items-center justify-between my-4"
+                    key={index}
+                  >
+                    <img
+                      className={classes.cart_product_img}
+                      src={data.product.original}
+                    />
+                    <div>
+                      <h1 className="font-thin text-sm tracking-wider  mb-3">
+                        {data.product.name}
+                      </h1>
+                      <p>
+                        {data.variation.type} - {data.variation.value}
                       </p>
                     </div>
-                    <p>
-                      ₹ {Number(data.cart.price).toLocaleString("en-IN")} /-
-                    </p>
-                  </div>
-                </div>
-                <hr />
-              </>
-            ))}
-          </div>
-          {cartdata.length !== 0 && (
-            <div className={classes.Cart_summary}>
-              <center>
-                <h1>Summary</h1>
-              </center>
-              <div className={classes.Cart_Summary_products}>
-                {cartdata.length !== 0
-                  ? cartdata.map((data, index) => (
-                      <div className="flex items-center justify-between my-4">
-                        <h1 className="font-thin text-xs tracking-wider mb-3">
-                          {data.product.name}
-                        </h1>
-                        <p className="text-xs w-36 text-end">
-                          ₹ {Number(data.cart.price).toLocaleString("en-IN")} /-
+                    <div className="flex flex-col items-center">
+                      <div className="flex">
+                        <p
+                          id={data.cart.id}
+                          onClick={deleterow}
+                          className="border hover:bg-white-400 py-2 px-2"
+                        >
+                          -
+                        </p>
+                        <p className="border py-2 px-8">{data.cart.Quantity}</p>
+                        <p
+                          id={data.cart.id}
+                          onClick={addcount}
+                          className="border hover:bg-white-400 py-2 px-2"
+                        >
+                          +
                         </p>
                       </div>
-                    ))
-                  : null}
-              </div>
-              <div className={classes.CartBuynow}>
-                {isClicked && <Loader />}
-                <>
-                  {!isClicked && (
-                    <button onClick={buyNowHandler}>Buy Now</button>
-                  )}
+                      <p>
+                        ₹ {Number(data.cart.price).toLocaleString("en-IN")} /-
+                      </p>
+                    </div>
+                  </div>
+                  <hr />
                 </>
-              </div>
-
-              <div className={classes.Cart_Footer}>
-                <p>SUBTOTAL</p>
-                <p>₹ {Number(subtotal).toLocaleString("en-IN")} /-</p>
-              </div>
+              ))}
             </div>
-          )}
-        </div>
+            {cartdata.length !== 0 && (
+              <div className={classes.Cart_summary}>
+                <center>
+                  <h1>Summary</h1>
+                </center>
+                <div className={classes.Cart_Summary_products}>
+                  {cartdata.length !== 0
+                    ? cartdata.map((data, index) => (
+                        <div className="flex items-center justify-between my-4">
+                          <h1 className="font-thin text-xs tracking-wider mb-3">
+                            {data.product.name}
+                          </h1>
+                          <p className="text-xs w-36 text-end">
+                            ₹ {Number(data.cart.price).toLocaleString("en-IN")}{" "}
+                            /-
+                          </p>
+                        </div>
+                      ))
+                    : null}
+                </div>
+                <div className={classes.CartBuynow}>
+                  {isClicked && <Loader />}
+                  <>
+                    {!isClicked && (
+                      <button onClick={buyNowHandler}>Buy Now</button>
+                    )}
+                  </>
+                </div>
+
+                <div className={classes.Cart_Footer}>
+                  <p>SUBTOTAL</p>
+                  <p>₹ {Number(subtotal).toLocaleString("en-IN")} /-</p>
+                </div>
+              </div>
+            )}
+          </div>
+        </>
       )}
       <ToastContainer />
     </div>

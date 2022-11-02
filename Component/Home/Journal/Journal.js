@@ -22,19 +22,22 @@ const Journal = () => {
     window.location.replace(`/Journal/${e.target.id}`);
   };
   return (
-    <div className="p-8 mt-4 ">
-      <h1 className="text-center text-2xl ">The New Journal</h1>
-      <div className={`${classes.Journal_images} mt-8 grid grid-cols-4 gap-4`}>
-        {journaldata.length !== 0
-          ? journaldata.map((data, index) => (
+    <>
+      {journaldata.length !== 0 && (
+        <div className="p-8 mt-4 ">
+          <div
+            className={`${classes.Journal_images} mt-8 flex items-center gap-4 justify-center`}
+          >
+            <h1 className="text-center text-2xl ">The New Journal</h1>
+            {journaldata.map((data, index) => (
               <div
-                className="flex flex-col items-center"
+                className="flex flex-col items-center "
                 key={index}
                 id={data.id}
                 onClick={getsinglejournal}
               >
                 <div
-                  className="grid grid-cols-2 items-center gap-4 bg-yellow-100"
+                  className={`grid grid-cols-2 items-center gap-4 bg-yellow-100 pr-4 ${classes.Journal_product}`}
                   id={data.id}
                 >
                   <img src={data.image} id={data.id} />
@@ -44,12 +47,11 @@ const Journal = () => {
                   {data.subheading}
                 </p>
               </div>
-            ))
-          : null}
-      </div>
-      {journaldata.length !==0 ?null:<center><div><h1 style={{textAligh:"center"}}>No Journal Available</h1></div></center>}
-      
-    </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

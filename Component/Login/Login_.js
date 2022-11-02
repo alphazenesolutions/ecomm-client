@@ -8,6 +8,7 @@ import Loader from "../Loader/Loader";
 
 const Login_ = () => {
   const [isSingup, setisSingup] = useState(false);
+  const [errorlist, seterrorlist] = useState(null);
 
   const SingupHandler = () => {
     setisSingup(true);
@@ -16,31 +17,6 @@ const Login_ = () => {
     setisSingup(false);
   };
 
-  const validate = (values) => {
-    const errors = {};
-    if (!values.name) {
-      errors.name = "Name Is Required";
-    }
-    if (!values.phone) {
-      errors.phone = "Mobile Number Required";
-    } else if (values.phone.length > 10) {
-      errors.phone = "Must be 10 characters";
-    }
-    if (!values.email) {
-      errors.email = "Email Required";
-    } else if (
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-    ) {
-      errors.email = "Invalid email address";
-    }
-    if (!values.password) {
-      errors.password = "Password Required";
-    } else if (values.password.length < 6) {
-      errors.password = "Must be 6 characters";
-    }
-
-    return errors;
-  };
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -48,24 +24,48 @@ const Login_ = () => {
       email: "",
       password: "",
     },
-    validate,
+
     onSubmit: async (values) => {
-      values["type"] = "customer";
-      var createuser = await CreateUser(values);
-      if (createuser.message === "SUCCESS") {
-        toast.success("User Created Successfully...", {
-          autoClose: 2000,
-          transition: Slide,
-        });
-        sessionStorage.setItem("customer_id", createuser.data.user_id);
-        setTimeout(() => {
-          window.location.replace("/");
-        }, 2000);
-      } else {
-        toast.error(createuser.message, {
-          autoClose: 2000,
-          transition: Slide,
-        });
+      const errors = {};
+      if (!values.name) {
+        errors.name = "Name Is Required";
+      }
+      if (!values.phone) {
+        errors.phone = "Mobile Number Required";
+      } else if (values.phone.length > 10) {
+        errors.phone = "Must be 10 characters";
+      }
+      if (!values.email) {
+        errors.email = "Email Required";
+      } else if (
+        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
+      ) {
+        errors.email = "Invalid email address";
+      }
+      if (!values.password) {
+        errors.password = "Password Required";
+      } else if (values.password.length < 6) {
+        errors.password = "Must be 6 characters";
+      }
+      seterrorlist(errors);
+      if (Object.keys(errors).length === 0) {
+        values["type"] = "customer";
+        var createuser = await CreateUser(values);
+        if (createuser.message === "SUCCESS") {
+          toast.success("User Created Successfully...", {
+            autoClose: 2000,
+            transition: Slide,
+          });
+          sessionStorage.setItem("customer_id", createuser.data.user_id);
+          setTimeout(() => {
+            window.location.replace("/");
+          }, 2000);
+        } else {
+          toast.error(createuser.message, {
+            autoClose: 2000,
+            transition: Slide,
+          });
+        }
       }
     },
   });
@@ -91,15 +91,19 @@ const Login_ = () => {
         password: password,
       };
       var loginuser = await LoginUser(data);
+     
       if (
         loginuser.message == "SUCCESS" &&
-        loginuser.data[0].type == "customer"
+        loginuser.data.checkuser[0].type == "customer"
       ) {
         toast.success("Welcome...", {
           autoClose: 2000,
           transition: Slide,
         });
-        sessionStorage.setItem("customer_id", loginuser.data[0].user_id);
+        sessionStorage.setItem(
+          "customer_id",
+          loginuser.data.checkuser[0].user_id
+        );
         setTimeout(() => {
           setisClicked(false);
 
@@ -135,8 +139,8 @@ const Login_ = () => {
                   onChange={formik.handleChange}
                   defaultValue={formik.values.name}
                 />
-                {formik.errors.name ? (
-                  <div className="text-red-500">{formik.errors.name}</div>
+                {errorlist !== null ? (
+                  <div className="text-red-500">{errorlist.name}</div>
                 ) : null}
               </div>
 
@@ -150,8 +154,8 @@ const Login_ = () => {
                   onChange={formik.handleChange}
                   defaultValue={formik.values.email}
                 />
-                {formik.errors.email ? (
-                  <div className="text-red-500">{formik.errors.email}</div>
+                {errorlist !== null ? (
+                  <div className="text-red-500">{errorlist.email}</div>
                 ) : null}
               </div>
               <div className="flex flex-col items-start ">
@@ -164,8 +168,8 @@ const Login_ = () => {
                   onChange={formik.handleChange}
                   defaultValue={formik.values.phone}
                 />
-                {formik.errors.phone ? (
-                  <div className="text-red-500">{formik.errors.phone}</div>
+                {errorlist !== null ? (
+                  <div className="text-red-500">{errorlist.phone}</div>
                 ) : null}
               </div>
               <div className="flex flex-col items-start ">
@@ -179,8 +183,8 @@ const Login_ = () => {
                   onChange={formik.handleChange}
                   defaultValue={formik.values.password}
                 />
-                {formik.errors.password ? (
-                  <div className="text-red-500">{formik.errors.password}</div>
+                {errorlist !== null ? (
+                  <div className="text-red-500">{errorlist.password}</div>
                 ) : null}
                 {!isClicked && (
                   <button className="bg-yellow-300 text-black-1000 w-full py-2 my-8">
@@ -236,7 +240,9 @@ const Login_ = () => {
                   </button>
                 )}
 
-                <p className="cursor-pointer" onClick={SingupHandler}>New to here ? Create account.</p>
+                <p className="cursor-pointer" onClick={SingupHandler}>
+                  New to here ? Create account.
+                </p>
               </div>
             </form>
           </div>

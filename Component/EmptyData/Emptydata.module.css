@@ -1,0 +1,21 @@
+.EmptyData {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  align-items: center;
+}
+.EmptyData img {
+  height: 300px;
+  width: 60%;
+  object-fit: contain;
+  margin: auto;
+}
+.EmptyData h1 {
+  font-size: 30px;
+  font-weight: bold;
+}
+.Sorry {
+  color: #ec1d24;
+}
+.Wishlist {
+  color: #64c69e;
+}

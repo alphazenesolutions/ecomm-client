@@ -4,7 +4,7 @@ const next = require("next");
 const dev = process.env.NODE_ENV !== "production";
 const hostname = "localhost";
 // const port = Math.floor(3000 + Math.random() * 4000);
-const port = 3100;
+const port = 3200;
 const app = next({ dev, hostname, port });
 const handle = app.getRequestHandler();
 

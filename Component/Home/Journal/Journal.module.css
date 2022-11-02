@@ -1,0 +1,12 @@
+.Journal_images img {
+  height: 200px;
+  width: 100%;
+  object-fit: cover;
+}
+.Journal_product {
+  width: 100%;
+  margin: auto;
+
+  margin-bottom: 50px;
+  margin-top: 20px;
+}

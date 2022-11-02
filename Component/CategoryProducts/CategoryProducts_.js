@@ -25,73 +25,74 @@ const CategoryProducts_ = () => {
     var part = str.split("//").pop().split("/")[2];
     var allNavbar = await allnavbar();
     var mystorenav = await allNavbar.data.filter((data) => {
-      return data.store === storeid && data.name === part;
+      return data.store == storeid && data.name == part;
     });
     if (mystorenav.length !== 0) {
       if (mystorenav[0].categories !== null) {
         var categorieslist = mystorenav[0].categories.split(",");
         if (categorieslist.length !== 0) {
+          var Products_data = [];
           for (var i = 0; i < categorieslist.length; i++) {
             var myprodyct = await categoryproduct({
               id: categorieslist[i],
               storeid: storeid,
             });
-            var Products_data = [];
-
-            for (var i = 0; i < myprodyct.data.length; i++) {
-              var product_variations = await productVariation({
-                id: myprodyct.data[i].id,
-              });
-              var Products_size = [];
-              var Products_color = [];
-              product_variations.map((Data) => {
-                if (Data.type == "Size") {
-                  Products_size.push({ value: Data.value, id: Data.id });
-                } else if (Data.type == "Color") {
-                  Products_color.push({ value: Data.value, id: Data.id });
-                }
-              });
-              var productsizelist = Products_size.filter(
-                (v, i, a) => a.indexOf(v) === i
-              );
-              var productcolorlist = Products_color.filter(
-                (v, i, a) => a.indexOf(v) === i
-              );
-              Products_data.push({
-                size: productsizelist,
-                color: productcolorlist,
-                category: myprodyct.data[i].category,
-                name: myprodyct.data[i].name,
-                price: myprodyct.data[i].price,
-                slug: myprodyct.data[i].slug,
-                original: myprodyct.data[i].original,
-              });
+            if (myprodyct.data.length !== 0) {
+              for (var a = 0; a < myprodyct.data.length; a++) {
+                var product_variations = await productVariation({
+                  id: myprodyct.data[a].id,
+                });
+                var Products_size = [];
+                var Products_color = [];
+                product_variations.map((Data) => {
+                  if (Data.type == "Size") {
+                    Products_size.push({ value: Data.value, id: Data.id });
+                  } else if (Data.type == "Color") {
+                    Products_color.push({ value: Data.value, id: Data.id });
+                  }
+                });
+                var productsizelist = Products_size.filter(
+                  (v, i, a) => a.indexOf(v) === i
+                );
+                var productcolorlist = Products_color.filter(
+                  (v, i, a) => a.indexOf(v) === i
+                );
+                Products_data.push({
+                  size: productsizelist,
+                  color: productcolorlist,
+                  category: myprodyct.data[a].category,
+                  name: myprodyct.data[a].name,
+                  price: myprodyct.data[a].price,
+                  slug: myprodyct.data[a].slug,
+                  original: myprodyct.data[a].original,
+                });
+              }
             }
-            setcategory_product(Products_data);
-            if (Products_data.length !== 0) {
-              var colorlist = [],
-                sizelist = [];
-              for (var i = 0; i < Products_data.length; i++) {
-                if (Products_data[i].color.length !== 0) {
-                  for (var j = 0; j < Products_data[i].color.length; j++) {
-                    colorlist.push(Products_data[i].color[j].value);
-                  }
-                }
-                if (Products_data[i].size.length !== 0) {
-                  for (var j = 0; j < Products_data[i].size.length; j++) {
-                    sizelist.push(Products_data[i].size[j].value);
-                  }
+          }
+          setcategory_product(Products_data);
+          if (Products_data.length !== 0) {
+            var colorlist = [],
+              sizelist = [];
+            for (var i = 0; i < Products_data.length; i++) {
+              if (Products_data[i].color.length !== 0) {
+                for (var j = 0; j < Products_data[i].color.length; j++) {
+                  colorlist.push(Products_data[i].color[j].value);
                 }
               }
-              var finalcolorlist = colorlist.filter(
-                (v, i, a) => a.indexOf(v) === i
-              );
-              var finalsizelist = sizelist.filter(
-                (v, i, a) => a.indexOf(v) === i
-              );
-              setcolorlist(finalcolorlist);
-              setsizelist(finalsizelist);
+              if (Products_data[i].size.length !== 0) {
+                for (var j = 0; j < Products_data[i].size.length; j++) {
+                  sizelist.push(Products_data[i].size[j].value);
+                }
+              }
             }
+            var finalcolorlist = colorlist.filter(
+              (v, i, a) => a.indexOf(v) === i
+            );
+            var finalsizelist = sizelist.filter(
+              (v, i, a) => a.indexOf(v) === i
+            );
+            setcolorlist(finalcolorlist);
+            setsizelist(finalsizelist);
           }
         }
       }

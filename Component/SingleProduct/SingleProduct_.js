@@ -11,6 +11,7 @@ import { CreateWishlist } from "../../Api/Wishlist";
 import { Createorder } from "../../Api/Orders";
 import { Payment } from "../../Api/Orders";
 import Loader from "../Loader/Loader";
+import Loaders from "../Loader";
 
 const SingleProduct_ = () => {
   const [price, setprice] = React.useState(0);
@@ -184,21 +185,33 @@ const SingleProduct_ = () => {
   const [iswislistloading, setiswislistloading] = useState(false);
   const addtowishlist = async (e) => {
     if (customer_id !== null) {
-      setiswislistloading(true);
-      var data = {
-        product_id: e.target.id,
-        user_id: sessionStorage.getItem("customer_id"),
-      };
-      var cretewishlist = await CreateWishlist(data);
-      if (cretewishlist.message === "SUCCESS") {
-        setiswislistloading(true);
-        toast.success("Wishlist Added..", {
+      if (type === null) {
+        toast.error("Please Select Variation..", {
           autoClose: 2000,
           transition: Slide,
         });
-        setiswislistloading(false);
       } else {
-        setiswislistloading(false);
+        setiswislistloading(true);
+
+        var data = {
+          product_id: e.target.id,
+          user_id: sessionStorage.getItem("customer_id"),
+          Quantity: count,
+          price: Number(count) * price,
+          variations: type,
+        };
+
+        var cretewishlist = await CreateWishlist(data);
+        if (cretewishlist.message === "SUCCESS") {
+          setiswislistloading(true);
+          toast.success("Wishlist Added..", {
+            autoClose: 2000,
+            transition: Slide,
+          });
+          setiswislistloading(false);
+        } else {
+          setiswislistloading(false);
+        }
       }
     } else {
       toast.error("Please Login..", {
@@ -499,6 +512,14 @@ const SingleProduct_ = () => {
                   ))
                 : "No Product Found.."}
             </div>
+          </div>
+        </div>
+      )}
+      {single_product.length == 0 && (
+        <div className={classes.LoadingPage}>
+          <div className={classes.Loader}>
+            <Loaders />
+            <p className="mt-4">Loading...</p>
           </div>
         </div>
       )}

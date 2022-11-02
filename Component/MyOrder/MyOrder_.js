@@ -13,6 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { CreateReview } from "../../Api/Review";
 import { useSelector } from "react-redux";
 import { firebase } from "../../database/firebase";
+import Emptydata from "../EmptyData/Emptydata";
 
 const MyOrder_ = () => {
   // rating
@@ -61,7 +62,7 @@ const MyOrder_ = () => {
   };
   const savebtn = async () => {
     const storeid = sessionStorage.getItem("store_id");
-
+    console.log(storeid);
     var review = document.getElementById("review").value;
     if (value === 0) {
       toast.error("Rating Is Required...", {
@@ -86,6 +87,7 @@ const MyOrder_ = () => {
           image: reviewimage,
         };
         var createreview = await CreateReview(data);
+        console.log(createreview);
         if (createreview.message === "SUCCESS") {
           toast.success("Review Added...", {
             autoClose: 2000,
@@ -118,174 +120,184 @@ const MyOrder_ = () => {
   };
   return (
     <div className="p-8 ">
-      <h1 className="mb-4 text-2xl">My Orders</h1>
-      {myorderdata.length == 0 && <center>NO ORDERS TO DISPLAY</center>}
+      {myorderdata.length == 0 && (
+        <div>
+          <Emptydata data="Orders" />
+        </div>
+      )}
       {myorderdata.length !== 0 && (
-        <div className="grid grid-cols-3 gap-8 ">
-          <div className="col-span-2  p-4 ">
-            {myorderdata.map((data, index) => (
-              <>
-                <h1 className="font-thin text-sm tracking-wider  mb-3">
-                  <b>{data.product.name}</b>
-                </h1>
-                <div className="flex items-center justify-between my-4">
-                  <div className="flex">
-                    <img
-                      className={classes.myorder_product_img}
-                      src={data.product.original}
-                    />
-                    <TableContainer component={Paper}>
-                      <Table sx={{ minWidth: 350 }} aria-label="simple table">
-                        <TableBody>
-                          <TableRow
-                            sx={{
-                              "&:last-child td, &:last-child th": {
-                                border: 0,
-                              },
-                            }}
-                          >
-                            <TableCell component="th" scope="row">
-                              Qty
-                            </TableCell>
-                            <TableCell align="right">
-                              {data.order.Quantity}
-                            </TableCell>
-                          </TableRow>
-                          <TableRow
-                            sx={{
-                              "&:last-child td, &:last-child th": {
-                                border: 0,
-                              },
-                            }}
-                          >
-                            <TableCell component="th" scope="row">
-                              {data.variation.type}
-                            </TableCell>
-                            <TableCell align="right">
-                              {data.variation.value}
-                            </TableCell>
-                          </TableRow>
-
-                          <TableRow
-                            sx={{
-                              "&:last-child td, &:last-child th": {
-                                border: 0,
-                              },
-                            }}
-                          >
-                            <TableCell component="th" scope="row">
-                              Price
-                            </TableCell>
-                            <TableCell align="right">
-                              ₹{" "}
-                              {Number(data.order.price).toLocaleString("en-IN")}{" "}
-                              /-
-                            </TableCell>
-                          </TableRow>
-                        </TableBody>
-                      </Table>
-                    </TableContainer>
-                  </div>
-                  <div>
-                    <span>{data.order.status}</span>
-                  </div>
-                  <div>
-                    {data.review !== undefined ? (
-                      <button
-                        className="bg-yellow-300 py-2 px-4  rounded-lg"
-                        id={data.order.id}
-                        onClick={reviewbtn}
-                      >
-                        Reviewed
-                      </button>
-                    ) : (
-                      <button
-                        className="bg-yellow-300 py-2 px-4  rounded-lg"
-                        id={data.order.id}
-                        onClick={reviewbtn}
-                      >
-                        Review Me
-                      </button>
-                    )}
-                  </div>
-                </div>
-                <hr />
-              </>
-            ))}
-          </div>
-          {reviewbox === true ? (
-            <div className={classes.myorder_review}>
-              <center>
-                <h1 className="mb-4">{productname}</h1>
-              </center>
-              {reviewvalue !== null && (
+        <>
+          <h1 className="mb-4 text-2xl">My Orders</h1>
+          <div className="grid grid-cols-3 gap-8 ">
+            <div className="col-span-2  p-4 ">
+              {myorderdata.map((data, index) => (
                 <>
-                  <div>
-                    <Rating
+                  <h1 className="font-thin text-sm tracking-wider  mb-3">
+                    <b>{data.product.name}</b>
+                  </h1>
+                  <div className="flex items-center justify-between my-4">
+                    <div className="flex">
+                      <img
+                        className={classes.myorder_product_img}
+                        src={data.product.original}
+                      />
+                      <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: 350 }} aria-label="simple table">
+                          <TableBody>
+                            <TableRow
+                              sx={{
+                                "&:last-child td, &:last-child th": {
+                                  border: 0,
+                                },
+                              }}
+                            >
+                              <TableCell component="th" scope="row">
+                                Qty
+                              </TableCell>
+                              <TableCell align="right">
+                                {data.order.Quantity}
+                              </TableCell>
+                            </TableRow>
+                            <TableRow
+                              sx={{
+                                "&:last-child td, &:last-child th": {
+                                  border: 0,
+                                },
+                              }}
+                            >
+                              <TableCell component="th" scope="row">
+                                {data.variation.type}
+                              </TableCell>
+                              <TableCell align="right">
+                                {data.variation.value}
+                              </TableCell>
+                            </TableRow>
+
+                            <TableRow
+                              sx={{
+                                "&:last-child td, &:last-child th": {
+                                  border: 0,
+                                },
+                              }}
+                            >
+                              <TableCell component="th" scope="row">
+                                Price
+                              </TableCell>
+                              <TableCell align="right">
+                                ₹{" "}
+                                {Number(data.order.price).toLocaleString(
+                                  "en-IN"
+                                )}{" "}
+                                /-
+                              </TableCell>
+                            </TableRow>
+                          </TableBody>
+                        </Table>
+                      </TableContainer>
+                    </div>
+                    <div>
+                      <span>{data.order.status}</span>
+                    </div>
+                    <div>
+                      {data.review !== undefined ? (
+                        <button
+                          className="bg-yellow-300 py-2 px-4  rounded-lg"
+                          id={data.order.id}
+                          onClick={reviewbtn}
+                        >
+                          Reviewed
+                        </button>
+                      ) : (
+                        <button
+                          className="bg-yellow-300 py-2 px-4  rounded-lg"
+                          id={data.order.id}
+                          onClick={reviewbtn}
+                        >
+                          Review Me
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                  <hr />
+                </>
+              ))}
+            </div>
+            {reviewbox === true ? (
+              <div className={classes.myorder_review}>
+                <center>
+                  <h1 className="mb-4">{productname}</h1>
+                </center>
+                {reviewvalue !== null && (
+                  <>
+                    <div>
+                      <Rating
+                        disabled
+                        name="simple-controlled"
+                        value={value}
+                        onChange={(event, newValue) => {
+                          setValue(newValue);
+                        }}
+                      />
+                    </div>
+                    <textarea
+                      rows={4}
                       disabled
-                      name="simple-controlled"
-                      value={value}
-                      onChange={(event, newValue) => {
-                        setValue(newValue);
-                      }}
+                      className=" w-full border border-2 p-2"
+                      placeholder="Write a review."
+                      id="review"
+                      defaultValue={reviewvalue}
                     />
-                  </div>
-                  <textarea
-                    rows={4}
-                    disabled
-                    className=" w-full border border-2 p-2"
-                    placeholder="Write a review."
-                    id="review"
-                    defaultValue={reviewvalue}
-                  />
-                </>
-              )}
-              {reviewvalue === null && (
-                <>
-                  <div>
-                    <Rating
-                      name="simple-controlled"
-                      value={value}
-                      onChange={(event, newValue) => {
-                        setValue(newValue);
-                      }}
+                  </>
+                )}
+                {reviewvalue === null && (
+                  <>
+                    <div>
+                      <Rating
+                        name="simple-controlled"
+                        value={value}
+                        onChange={(event, newValue) => {
+                          setValue(newValue);
+                        }}
+                      />
+                    </div>
+                    <textarea
+                      rows={4}
+                      className=" w-full border border-2 p-2"
+                      placeholder="Write a review."
+                      id="review"
+                      defaultValue={reviewvalue}
                     />
-                  </div>
-                  <textarea
-                    rows={4}
-                    className=" w-full border border-2 p-2"
-                    placeholder="Write a review."
-                    id="review"
-                    defaultValue={reviewvalue}
-                  />
-                  <input
-                    className="border w-full mt-4 p-3"
-                    type="file"
-                    onChange={geturl}
-                  />
-                </>
-              )}
+                    <input
+                      className="border w-full mt-4 p-3"
+                      type="file"
+                      onChange={geturl}
+                    />
+                  </>
+                )}
 
-              {reviewvalue === null ? (
-                disablebtn === true ? (
-                  <div className={classes.myOrder_Footer}>
-                    <button onClick={savebtn} disabled>
-                      Save
-                    </button>
-                  </div>
+                {reviewvalue === null ? (
+                  disablebtn === true ? (
+                    <div className={classes.myOrder_Footer}>
+                      <button style={{ cursor: "pointer" }} onClick={savebtn}>
+                        Save
+                      </button>
+                    </div>
+                  ) : (
+                    <div className={classes.myOrder_Footer}>
+                      <p style={{ cursor: "pointer" }} onClick={savebtn}>
+                        Save
+                      </p>
+                    </div>
+                  )
                 ) : (
                   <div className={classes.myOrder_Footer}>
-                    <p onClick={savebtn}>Save</p>
+                    <p>Reviewed</p>
                   </div>
-                )
-              ) : (
-                <div className={classes.myOrder_Footer}>
-                  <p>Reviewed</p>
-                </div>
-              )}
-            </div>
-          ) : null}
-        </div>
+                )}
+              </div>
+            ) : null}
+          </div>
+        </>
       )}
 
       <ToastContainer />

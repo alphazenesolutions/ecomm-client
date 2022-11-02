@@ -9,6 +9,8 @@ import { SingleStore } from "../../../Api/Store";
 
 const Featured_products = () => {
   const [productdata, setproductdata] = useState([]);
+  const [productPerView, setproductPerView] = useState([]);
+
   useEffect(() => {
     getalldata();
   }, []);
@@ -21,6 +23,11 @@ const Featured_products = () => {
         return datanew.store == storeid && datanew.featured !== null;
       });
       setproductdata(checkproduct);
+      if (checkproduct.length <= 4) {
+        setproductPerView(checkproduct.length);
+      } else {
+        setproductPerView(4);
+      }
     }
   };
   const viewproduct = (e) => {
@@ -64,7 +71,7 @@ const Featured_products = () => {
       </center>
       <div className={`${classes.Featured_product_images} mt-8 `}>
         <Swiper
-          slidesPerView={4}
+          slidesPerView={productPerView}
           spaceBetween={30}
           pagination={{
             clickable: true,
@@ -74,16 +81,26 @@ const Featured_products = () => {
         >
           {productdata.length !== 0
             ? productdata.map((data, index) => (
-                <SwiperSlide key={index} id={data.slug} className="swipertag" onClick={viewproduct}>
-                  <div className="flex flex-col items-center" id={data.slug}>
-                    <img src={data.original} id={data.slug} />
-                    <p className="text-center my-4" id={data.slug}>
-                      {data.name}
-                    </p>
-                    <p className="text-black-500 font-bold" id={data.slug}>
-                      ₹ {Number(data.price).toLocaleString("en-IN")} /-
-                    </p>
-                  </div>
+                <SwiperSlide
+                  key={index}
+                  id={data.slug}
+                  className="swipertag"
+                  onClick={viewproduct}
+                >
+                  <center>
+                    <div
+                      className={`flex flex-col items-center ${classes.product_container}`}
+                      id={data.slug}
+                    >
+                      <img src={data.original} id={data.slug} />
+                      <p className="text-center my-4" id={data.slug}>
+                        {data.name}
+                      </p>
+                      <p className="text-black-500 font-bold" id={data.slug}>
+                        ₹ {Number(data.price).toLocaleString("en-IN")} /-
+                      </p>
+                    </div>
+                  </center>
                 </SwiperSlide>
               ))
             : null}

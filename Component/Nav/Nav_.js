@@ -80,7 +80,6 @@ const Nav_ = () => {
   const getallmenu = async () => {
     const store = sessionStorage.getItem("store_id");
     var mynavlist = await SingleNav({ id: store });
-    console.log(mynavlist);
     if (mynavlist.data.length !== 0) {
       setmenudata(mynavlist.data);
     }
@@ -135,17 +134,12 @@ const Nav_ = () => {
     window.location.replace(`/collections/singleProduct/${e.target.id}`);
   };
   const handleClick_M = async (event) => {
-    console.log(event.target.id);
-
     setAnchorEl_M(event.currentTarget);
     const store = sessionStorage.getItem("store_id");
     var checkmenudata = await menudata.filter((data) => {
-      console.log(data);
       return data.name == event.target.id;
     });
-    console.log(checkmenudata);
     if (checkmenudata.length !== 0) {
-      console.log("hleo");
       setselectedcategory([]);
       if (checkmenudata[0].categories !== null) {
         var categorylist = checkmenudata[0].categories.split(",");
@@ -160,7 +154,7 @@ const Nav_ = () => {
             }
           }
           setAnchorEl(event.currentTarget);
-          console.log(selectedcate);
+
           setselectedcategory(selectedcate);
         }
       }
@@ -187,214 +181,232 @@ const Nav_ = () => {
             <YouTubeIcon />
           </div>
         </div>
-        {isSearch && (
-          <div className={classes.Nav_searchBar}>
-            <FormControl
-              sx={{ width: "100%", marginTop: "20px", textAlign: "center" }}
-              variant="outlined"
-            >
-              <OutlinedInput
-                id="outlined-adornment-weight"
-                placeholder="Search Product"
-                onChange={onTyping}
-                endAdornment={
-                  <>
-                    <InputAdornment position="end">
-                      {" "}
-                      <CloseIcon
-                        className=" font-thin"
-                        onClick={() => {
-                          setisSearch(false);
-                        }}
-                      />
-                    </InputAdornment>
-                  </>
-                }
-                aria-describedby="outlined-weight-helper-text"
-                inputProps={{
-                  "aria-label": "weight",
-                }}
-              />
-            </FormControl>
-            {isTyping && (
-              <div className={`w-full p-4 ${classes.SearchedProducts}`}>
-                {filterproduct.length !== 0
-                  ? filterproduct.map((data, index) => (
-                      <div
-                        className={`flex items-center justify-between productbox py-2 px-8 border mb-2 ${classes.productbox}`}
-                        id={data.slug}
-                        onClick={getproductslug}
-                      >
-                        <img src={data.original} id={data.slug} />
-                        <div id={data.slug}>
-                          <h1 id={data.slug}>
-                            <b>{data.name}</b>
-                          </h1>
-                          <p
-                            className="text-yellow-500 font-bold"
-                            id={data.slug}
-                          >
-                            ₹ {Number(data.price).toLocaleString("en-IN")} /-
-                          </p>
-                        </div>
-                        <button
+
+        <div
+          className={`grid grid-cols-3 gap-4 justify-between items-center mt-8 ${classes.nav_search}`}
+        >
+          {/* <div
+          className={`flex items-start justify-between mt-8 ${classes.nav_search}`}
+        > */}
+          {isSearch && (
+            <div className={classes.Nav_searchBar}>
+              <FormControl
+                sx={{ marginTop: "20px", textAlign: "center" }}
+                variant="outlined"
+              >
+                <OutlinedInput
+                  id="outlined-adornment-weight"
+                  placeholder="Search Product"
+                  onChange={onTyping}
+                  endAdornment={
+                    <>
+                      <InputAdornment position="end">
+                        {" "}
+                        <CloseIcon
+                          className=" font-thin"
+                          onClick={() => {
+                            setisSearch(false);
+                          }}
+                        />
+                      </InputAdornment>
+                    </>
+                  }
+                  aria-describedby="outlined-weight-helper-text"
+                  inputProps={{
+                    "aria-label": "weight",
+                  }}
+                />
+              </FormControl>
+              {isTyping && (
+                <>
+                  {filterproduct.length !== 0 ? (
+                    <div className={`w-full p-4 ${classes.SearchedProducts}`}>
+                      {filterproduct.map((data, index) => (
+                        <div
+                          className={`flex items-center justify-between productbox py-2 px-8 border mb-2 ${classes.productbox}`}
                           id={data.slug}
                           onClick={getproductslug}
-                          className="border py-2 px-8 hover:bg-white-400"
                         >
-                          Open
-                        </button>
-                      </div>
-                    ))
-                  : null}
-              </div>
-            )}
-          </div>
-        )}
-
-        {!isSearch && (
-          <div
-            className={`flex items-start justify-between mt-8 ${classes.nav_search}`}
-          >
-            {!isSearch && (
-              <SearchIcon className="font-thin cursor-pointer" onClick={searchHandler} />
-            )}
-            <div className="flex items-center flex-col logo	cursor-pointer">
-              {storelogo === null ? (
-                <Image
-                  onClick={Navigate_Home}
-                  src="/logo.avif"
-                  alt="Logo"
-                  width="140px"
-                  height="60"
-                ></Image>
-              ) : (
-                <img
-                  src={storelogo}
-                  onClick={Navigate_Home}
-                  width="140px"
-                  height="60"
-                />
-              )}
-
-              <div className="flex  items-center justify-between mt-4 w-full">
-                {menudata.length !== 0
-                  ? menudata.map((data, index) => (
-                      <>
-                        <div
-                          id={data.name}
-                          onClick={Nav_categoryPrroducts}
-                          style={{ zIndex: "3200" }}
-                        >
-                          <p
-                            aria-describedby={id_M}
-                            id={data.name}
-                            value={data.name}
-                            onMouseEnter={handleClick_M}
-                            className={`mr-4 ml-4 ${classes.navMenus}`}
-                          >
-                            {data.name.toUpperCase()}
-                          </p>
-                        </div>
-
-                        <Popover
-                          id={id_M}
-                          open={open_M}
-                          anchorEl={anchorEl_M}
-                          onClose={handleClose_M}
-                          anchorOrigin={{
-                            vertical: "bottom",
-                            horizontal: "left",
-                          }}
-                        >
-                          <div
-                            onMouseLeave={handleClose_M}
-                            className="p-4  "
-                            style={{ width: "180px" }}
-                          >
-                            {selectedcategory.length !== 0
-                              ? selectedcategory.map((data, index) => (
-                                  <>
-                                    <div className="flex items-center justify-between w-full mb-1">
-                                      <p
-                                        onClick={Navigate_ShopNow}
-                                        key={index}
-                                        id={data.slug}
-                                        className="text-xs my-2"
-                                      >
-                                        {" "}
-                                        {data.category_name}
-                                      </p>
-                                      <Avatar
-                                        src={data.category_image}
-                                        className={classes.Nav_avatar}
-                                      ></Avatar>
-                                    </div>
-                                    <hr />
-                                  </>
-                                ))
-                              : "No Category"}
+                          <img src={data.original} id={data.slug} />
+                          <div id={data.slug}>
+                            <h1 id={data.slug}>
+                              <b>{data.name}</b>
+                            </h1>
+                            <p
+                              className="text-yellow-500 font-bold"
+                              id={data.slug}
+                            >
+                              ₹ {Number(data.price).toLocaleString("en-IN")} /-
+                            </p>
                           </div>
-                        </Popover>
-                      </>
-                    ))
-                  : null}
-                <p
-                  className={`mr-4 ml-4 ${classes.navMenus}`}
-                  onClick={() => {
-                    window.location.replace("/Sale");
-                  }}
-                >
-                  SALE
-                </p>
-                <p
-                  className={`mr-4 ml-4 ${classes.navMenus}`}
-                  onClick={() => {
-                    window.location.replace("/Blog");
-                  }}
-                >
-                  BLOG
-                </p>
-              </div>
+                          <button
+                            id={data.slug}
+                            onClick={getproductslug}
+                            className="border py-2 px-8 hover:bg-white-400"
+                          >
+                            Open
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className={`w-full p-4 ${classes.SearchedProducts_}`}>
+                      <div
+                        className={`flex items-center justify-between productbox py-2 px-8 border mb-2 ${classes.productbox}`}
+                      >
+                        <div>
+                          <h1>
+                            <b>No items match</b>
+                          </h1>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </>
+              )}
             </div>
-            {customer_id !== null ? (
-              <div className="flex items-center">
-                <Person2OutlinedIcon onClick={userprofile} className="mr-4" />
-                <Badge
-                  className="mr-4"
-                  badgeContent={mywishlistcount}
-                  color="primary"
-                >
-                  <FavoriteBorderOutlinedIcon
-                    onClick={() => {
-                      window.location.replace("/Wishlist");
-                    }}
-                  />
-                </Badge>
-                <Badge
-                  className="mr-4"
-                  badgeContent={mycartcount}
-                  color="primary"
-                >
-                  <ShoppingCartOutlinedIcon
-                    onClick={() => {
-                      window.location.replace("/Cart");
-                    }}
-                  />
-                </Badge>
-                <ShoppingBagOutlinedIcon
+          )}
+          {!isSearch && (
+            <SearchIcon
+              className="font-thin cursor-pointer"
+              onClick={searchHandler}
+            />
+          )}
+          <div className="flex items-center flex-col logo	cursor-pointer">
+            {storelogo === null ? (
+              <Image
+                onClick={Navigate_Home}
+                src="/logo.avif"
+                alt="Logo"
+                width="140px"
+                height="60"
+              ></Image>
+            ) : (
+              <img
+                src={storelogo}
+                onClick={Navigate_Home}
+                width="140px"
+                height="60"
+              />
+            )}
+
+            <div className="flex  items-center justify-between mt-4 w-full">
+              {menudata.length !== 0
+                ? menudata.map((data, index) => (
+                    <>
+                      <div
+                        id={data.name}
+                        onClick={Nav_categoryPrroducts}
+                        style={{ zIndex: "3200" }}
+                      >
+                        <p
+                          aria-describedby={id_M}
+                          id={data.name}
+                          value={data.name}
+                          onMouseEnter={handleClick_M}
+                          className={`mr-4 ml-4 ${classes.navMenus}`}
+                        >
+                          {data.name.toUpperCase()}
+                        </p>
+                      </div>
+
+                      <Popover
+                        id={id_M}
+                        open={open_M}
+                        anchorEl={anchorEl_M}
+                        onClose={handleClose_M}
+                        anchorOrigin={{
+                          vertical: "bottom",
+                          horizontal: "left",
+                        }}
+                      >
+                        <div
+                          onMouseLeave={handleClose_M}
+                          className="p-4  "
+                          style={{ width: "180px" }}
+                        >
+                          {selectedcategory.length !== 0
+                            ? selectedcategory.map((data, index) => (
+                                <>
+                                  <div className="flex items-center justify-between w-full mb-1">
+                                    <p
+                                      onClick={Navigate_ShopNow}
+                                      key={index}
+                                      id={data.slug}
+                                      className="text-xs my-2"
+                                    >
+                                      {" "}
+                                      {data.category_name}
+                                    </p>
+                                    <Avatar
+                                      src={data.category_image}
+                                      className={classes.Nav_avatar}
+                                    ></Avatar>
+                                  </div>
+                                  <hr />
+                                </>
+                              ))
+                            : "No Category"}
+                        </div>
+                      </Popover>
+                    </>
+                  ))
+                : null}
+              <p
+                className={`mr-4 ml-4 ${classes.navMenus}`}
+                onClick={() => {
+                  window.location.replace("/Sale");
+                }}
+              >
+                SALE
+              </p>
+              <p
+                className={`mr-4 ml-4 ${classes.navMenus}`}
+                onClick={() => {
+                  window.location.replace("/Blog");
+                }}
+              >
+                BLOG
+              </p>
+            </div>
+          </div>
+          {customer_id !== null ? (
+            <div className="flex items-center justify-end">
+              <Person2OutlinedIcon onClick={userprofile} className="mr-4" />
+              <Badge
+                className="mr-4"
+                badgeContent={mywishlistcount}
+                color="primary"
+              >
+                <FavoriteBorderOutlinedIcon
                   onClick={() => {
-                    window.location.replace("/Order");
+                    window.location.replace("/Wishlist");
                   }}
                 />
-              </div>
-            ) : (
-              <div className="flex items-center cursor-pointer">
-                <Person2OutlinedIcon onClick={userprofile} className="mr-4" />
-              </div>
-            )}
-          </div>
-        )}
+              </Badge>
+              <Badge
+                className="mr-4"
+                badgeContent={mycartcount}
+                color="primary"
+              >
+                <ShoppingCartOutlinedIcon
+                  onClick={() => {
+                    window.location.replace("/Cart");
+                  }}
+                />
+              </Badge>
+              <ShoppingBagOutlinedIcon
+                onClick={() => {
+                  window.location.replace("/Order");
+                }}
+              />
+            </div>
+          ) : (
+            <div className="flex items-center cursor-pointer justify-end">
+              <Person2OutlinedIcon onClick={userprofile} className="mr-4" />
+            </div>
+          )}
+        </div>
       </div>
       <ToastContainer />
     </div>
