@@ -7,6 +7,7 @@ import { Createorder } from "../../Api/Orders";
 import { toast, Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Emptydata from "../EmptyData/Emptydata";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const Cart_ = () => {
   const [cartdata, setcartdata] = useState([]);
@@ -147,6 +148,12 @@ const Cart_ = () => {
     const paymentObject = new window.Razorpay(options);
     paymentObject.open();
   };
+  const deletebtn = (e) => {
+    Deleteecart({ id: e.target.id });
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+  }
   return (
     <div className="p-8 ">
       {cartdata.length == 0 && (
@@ -198,6 +205,9 @@ const Cart_ = () => {
                       <p>
                         ₹ {Number(data.cart.price).toLocaleString("en-IN")} /-
                       </p>
+                    </div>
+                    <div>
+                      <button style={{width:"30px",backgroundColor:"lightgray",borderRadius:"50%",height:"30px"}} id={data.cart.id} onClick={deletebtn}><DeleteIcon id={data.cart.id} onClick={deletebtn}/></button>
                     </div>
                   </div>
                   <hr />
